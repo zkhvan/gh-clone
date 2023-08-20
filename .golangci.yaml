@@ -1,0 +1,13 @@
+linters:
+  enable:
+    - gci
+
+linters-settings:
+  gci:
+    custom-order: true
+
+    sections:
+      - standard
+      - default
+      - prefix(github.com/zkhvan)
+      - prefix(github.com/zkhvan/gh-clone)
