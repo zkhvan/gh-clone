@@ -1,6 +1,6 @@
 module github.com/zkhvan/gh-clone
 
-go 1.20
+go 1.21
 
 require github.com/cli/go-gh/v2 v2.0.1
 
