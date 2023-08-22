@@ -1,6 +1,9 @@
 package repos
 
 import (
+	"context"
+	"time"
+
 	"github.com/MakeNowJust/heredoc"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -56,5 +59,14 @@ func NewCmdRepos(runF func(*Options) error) *cobra.Command {
 }
 
 func reposRun(opts *Options) error {
-	return nil
+	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(ctx, 10*time.Minute)
+	defer cancel()
+
+	cmd, err := newCmd(opts)
+	if err != nil {
+		return err
+	}
+
+	return cmd.run(ctx)
 }
