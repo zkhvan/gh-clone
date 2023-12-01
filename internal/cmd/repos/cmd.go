@@ -47,9 +47,11 @@ func (c *cmd) run(ctx context.Context) error {
 		return c.getRepos(ctx, ch, pg)
 	})
 
-	g.Go(func() error {
-		return c.cloneRepos(ctx, ch, pg)
-	})
+	for i := 0; i < c.opts.Workers; i++ {
+		g.Go(func() error {
+			return c.cloneRepos(ctx, ch, pg)
+		})
+	}
 
 	if err := pg.Wait(); err != nil {
 		if errors.Is(err, progress.ErrAborted) {
