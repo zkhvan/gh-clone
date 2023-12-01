@@ -16,7 +16,8 @@ type Options struct {
 	GitArgs      []string
 	UpstreamName string
 
-	Owner string
+	Owner   string
+	Workers int
 }
 
 func NewCmdRepos(runF func(*Options) error) *cobra.Command {
@@ -46,6 +47,7 @@ func NewCmdRepos(runF func(*Options) error) *cobra.Command {
 
 	cmd.Flags().StringVarP(&opts.UpstreamName, "upstream-remote-name", "u", "upstream", "Upstream remote name when cloning a fork")
 	cmd.Flags().StringVarP(&opts.Owner, "owner", "o", "", "Repository owner")
+	cmd.Flags().IntVar(&opts.Workers, "workers", 10, "Number of workers to spawn for cloning")
 	cmd.SetFlagErrorFunc(func(cmd *cobra.Command, err error) error {
 		if err == pflag.ErrHelp {
 			return err
